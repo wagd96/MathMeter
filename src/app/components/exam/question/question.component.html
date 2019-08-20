@@ -1,0 +1,10 @@
+<div style="font-family: sans-serif;">
+    <p>
+        Pregunta {{currentQuestion}} de 20.
+    </p>
+    <ng-katex-paragraph [paragraph]="paragraph"></ng-katex-paragraph>
+    <input type="text" placeholder="Ingrese la respuesta">
+    <button (click)="changeQuestion(false)">Anterior pregunta</button>
+    <button (click)="changeQuestion(true)">Enviar</button>
+    <button (click)="changeQuestion(true)">Siguiente pregunta</button>
+</div>
