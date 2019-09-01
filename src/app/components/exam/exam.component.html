@@ -1,3 +1,7 @@
 <div class="row justify-content-center">
-    <app-question></app-question>
+    <div *ngIf="existsExam">
+        <p>Estas presentando el examen {{exam.name}} y de id {{exam.id}}</p>
+    </div>
+    <app-question *ngIf="containsTest" [tests]=tests></app-question>
+    
 </div>

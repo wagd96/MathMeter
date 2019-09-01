@@ -1,10 +1,20 @@
 <div style="font-family: sans-serif;">
-    <p>
-        Pregunta {{currentQuestion}} de 20.
-    </p>
+    <br>
+    <p>Pregunta {{currentQuestion}} de {{totalQuestion}}</p>
     <ng-katex-paragraph [paragraph]="paragraph"></ng-katex-paragraph>
-    <input type="text" placeholder="Ingrese la respuesta">
-    <button (click)="changeQuestion(false)">Anterior pregunta</button>
+
+    <!--(ngSubmit)="onSubmit()--><form #answerForm="ngForm">
+        <div class="form-group">
+            <label for="answer">Respuesta</label>
+            <input type="number" class="form-control" [(ngModel)]="answer" placeholder="Ingrese la respuesta" id="answer" name = "answer" required>
+        </div>
+
+        <button type="button" class="btn btn-success" (click)="changeQuestion()">Enviar y continuar</button>
+      
+    </form>
+
+    <p>{{frase}}</p>
+    <!--<input type="text" placeholder="Ingrese la respuesta">
     <button (click)="changeQuestion(true)">Enviar</button>
-    <button (click)="changeQuestion(true)">Siguiente pregunta</button>
+    <button (click)="changeQuestion(true)">Siguiente pregunta</button>-->
 </div>
