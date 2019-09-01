@@ -7,4 +7,8 @@ export class ExamService {
   getExams() {
     return this.http.get<any>(url + 'exams/1');
   }
+
+  insertStudentAnswers(answers: any) {
+    return this.http.post<any>(url + 'studentAnswers', {answers, option:0});
+  }
 }
