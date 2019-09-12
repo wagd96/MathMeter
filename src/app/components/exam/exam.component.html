@@ -1,7 +1,25 @@
-<div class="row justify-content-center">
-    <div *ngIf="existsExam">
-        <p>Estas presentando el examen {{exam.name}} y de id {{exam.id}}</p>
+<div *ngIf="!isLogin" class="row justify-content-center">
+    <div class="col-4 "></div>
+    <div class="col-4 ">
+        <h2>Ingresa tus credenciales</h2>
+        <br>
+        <input type="text" class="form-control" placeholder="id estudiante" id="id_student" name="id_student" required>
+        <br>
+        <input type="text" class="form-control" placeholder="id grupo" id="id_group" name="id_group" required>
+        <br>
+        <button type="button" class="btn btn-success" (click)="login()">Iniciar examen</button>
     </div>
-    <app-question *ngIf="containsTest" [tests]=tests></app-question>
-    
+    <div class="col-4"></div>
+</div>
+
+<div *ngIf="isLogin" class="container">
+
+    <div class="row  justify-content-center">
+        <div *ngIf="existsExam">
+            <p>Estas presentando el examen {{exam.name}} y de id {{exam.id}}</p>
+        </div>
+    </div>
+    <div class="row  justify-content-center">
+        <app-question *ngIf="containsTest" [tests]=tests></app-question>
+    </div>
 </div>

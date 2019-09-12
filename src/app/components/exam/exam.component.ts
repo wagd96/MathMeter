@@ -12,6 +12,7 @@ export class ExamComponent implements OnInit {
   tests: any;
   existsExam = false;
   containsTest = false;
+  isLogin = false;
 
   constructor(private exaService: ExamService) { }
 
@@ -32,6 +33,11 @@ export class ExamComponent implements OnInit {
       console.log('No se conecta a la BD', err);
     });
 
+  }
+
+  login(){
+    this.isLogin=true;
+    
   }
 
 }
