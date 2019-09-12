@@ -18,7 +18,6 @@ export class ExamComponent implements OnInit {
     idStudent: '',
     idGroup: ''
   }
-
   nameStudent = ''
 
   constructor(private exaService: ExamService) { }

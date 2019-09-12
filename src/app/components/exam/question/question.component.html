@@ -9,12 +9,7 @@
             <input type="number" class="form-control" [(ngModel)]="answer" placeholder="Ingrese la respuesta" id="answer" name = "answer" required>
         </div>
 
-        <button type="button" class="btn btn-success" (click)="changeQuestion()">Enviar y continuar</button>
+        <button type="button" class="btn btn-success" (click)="changeQuestion()" disabled="{{btnDisabled}}">{{btnMessage}}</button>
       
     </form>
-
-    <p>{{frase}}</p>
-    <!--<input type="text" placeholder="Ingrese la respuesta">
-    <button (click)="changeQuestion(true)">Enviar</button>
-    <button (click)="changeQuestion(true)">Siguiente pregunta</button>-->
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ExamService } from '../../../services/exam.service'
 
 @Component({
   selector: 'app-question',
@@ -7,22 +8,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 
 export class QuestionComponent implements OnInit {
-  @Input() tests : any;
+  @Input() tests: any;
+  @Input() user: any;
   paragraph = ``;
+  btnMessage = "Enviar y Continuar";
   currentQuestion = 1;
-  totalQuestion : number;
+  totalQuestion: number;
   studenAnswers = [];
-  studentAnswer = {
-    id_student: 1,
-    id_group: 1,
-    id_test: 0,
-    faied: true,
-    date: ""
-  };
   answer = 0;
-  frase = "";
-  failed = [];
-  constructor() { }
+  btnDisabled = "";
+
+  constructor(private exaService: ExamService) { }
 
   ngOnInit() {
     this.totalQuestion = this.tests.length;
@@ -30,38 +26,44 @@ export class QuestionComponent implements OnInit {
   }
 
   changeQuestion() {
-    if (this.currentQuestion > this.totalQuestion) {
-      console.log("No se avanza");
-      console.log(this.studenAnswers);
-      return;
+    let studentAnswer = {
+      id_student: this.user.idStudent,
+        id_group: this.user.idGroup,
+        id_test: 0,
+        failed: true,
+        date: new Date().toISOString().split("T")[0]
     }
-    this.studentAnswer.id_test = this.tests[this.currentQuestion - 1].test.id;
-    if (this.answer == this.tests[this.currentQuestion - 1].problem.answer) {
-      this.studentAnswer.faied = false
-      this.frase = "Correcto.";
+    if (this.currentQuestion == this.totalQuestion) {
+      studentAnswer.id_test = this.tests[this.currentQuestion - 1].test.id;
+      if (this.answer == this.tests[this.currentQuestion - 1].problem.answer) {
+        studentAnswer.failed = false
+      } else {
+        studentAnswer.failed = true;
+      }
+      this.studenAnswers.push(studentAnswer);
+      this.btnDisabled = "true";
+
+      this.exaService.insertStudentAnswers(this.studenAnswers).subscribe(data => {
+        console.log("Mostrar las pinches estadisticas");
+      },error => {
+        console.log(error);
+      });
     } else {
-      this.frase = "Incorrecto";
-      this.studentAnswer.faied = true;
-      this.failed.push(this.currentQuestion - 1);
-    }
-    this.studenAnswers.push(this.studentAnswer);
-    this.currentQuestion += 1;
+      studentAnswer.id_test = this.tests[this.currentQuestion - 1].test.id;
+      if (this.answer == this.tests[this.currentQuestion - 1].problem.answer) {
+        studentAnswer.failed = false
+      } else {
+        studentAnswer.failed = true;
+      }
+      this.studenAnswers.push(studentAnswer);
+      this.currentQuestion += 1;
 
-    if(this.currentQuestion > this.totalQuestion) {
-      console.log(this.failed);
-      return;
+      if (this.currentQuestion == this.totalQuestion) {
+        this.btnMessage = "Finalizar prueba";
+      }
+      this.paragraph = this.tests[this.currentQuestion - 1].problem.question;
+      this.answer = 0;
     }
-    this.paragraph = this.tests[this.currentQuestion - 1].problem.question;
-
-    //Resetear la pregunta
-    this.studentAnswer = {
-      id_student: 1,
-      id_group: 1,
-      id_test: 0,
-      faied: true,
-      date: ""
-    };
-    this.answer = 0;
   }
 
 }
