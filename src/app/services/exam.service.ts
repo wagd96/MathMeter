@@ -11,4 +11,12 @@ export class ExamService {
   insertStudentAnswers(answers: any) {
     return this.http.post<any>(url + 'studentAnswers', {answers, option:0});
   }
+
+  getStudentXGroupId(idGroup, idStudent) {
+    return this.http.post<any>(url +'studentsxgroups',{
+      id_student: idStudent,
+      id_group: idGroup,
+      option: 1
+    });
+  }
 }

@@ -9,10 +9,17 @@ import {ExamService} from '../../services/exam.service';
 export class ExamComponent implements OnInit {
 
   exam: any;
+  message = "";
   tests: any;
   existsExam = false;
   containsTest = false;
   isLogin = false;
+  user = {
+    idStudent: '',
+    idGroup: ''
+  }
+
+  nameStudent = ''
 
   constructor(private exaService: ExamService) { }
 
@@ -36,8 +43,18 @@ export class ExamComponent implements OnInit {
   }
 
   login(){
-    this.isLogin=true;
-    
+    let idGroup = this.user.idGroup;
+    let idStudent = this.user.idStudent;
+
+    this.exaService.getStudentXGroupId(idGroup,idStudent).subscribe(data => {
+      this.isLogin = true;
+      this.message = "";
+      this.nameStudent = data.entity.student__name;
+    }, error => {
+      this.isLogin = false;
+      this.message = "Credenciales incorrectas.";
+      this.nameStudent = "";
+    });
   }
 
 }
