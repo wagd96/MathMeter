@@ -19,6 +19,8 @@ export class ExamComponent implements OnInit {
     idGroup: ''
   }
   nameStudent = ''
+  minutes: number;
+  seconds: number;
 
   constructor(private exaService: ExamService) { }
 
@@ -30,6 +32,8 @@ export class ExamComponent implements OnInit {
         const entity = data.entity;
         this.exam = entity.exam;
         this.tests = entity.tests;
+        this.minutes = this.exam.duration - 1;
+        this.seconds = 59;
 
         if (this.tests.length > 0) {
           this.containsTest = true
@@ -49,11 +53,23 @@ export class ExamComponent implements OnInit {
       this.isLogin = true;
       this.message = "";
       this.nameStudent = data.entity.student__name;
+      setInterval(() => this.tick(), 1000);
     }, error => {
       this.isLogin = false;
       this.message = "Credenciales incorrectas.";
       this.nameStudent = "";
     });
+  }
+
+  tick() {
+    if (--this.seconds < 0) {
+      this.seconds = 59
+      if(--this.minutes < 0) {
+        console.log("Para el timer");
+        this.minutes = 0;
+        this.seconds = 0;
+      }
+    }
   }
 
 }
