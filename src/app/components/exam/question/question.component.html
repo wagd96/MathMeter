@@ -1,3 +1,4 @@
+<div *ngIf="finish" class="row justify-content-center">
 <div style="font-family: sans-serif;">
     <br>
     <p>Pregunta {{currentQuestion}} de {{totalQuestion}}</p>
@@ -12,4 +13,19 @@
         <button type="button" class="btn btn-success" (click)="changeQuestion()" disabled="{{btnDisabled}}">{{btnMessage}}</button>
       
     </form>
+</div>
+</div>
+
+<div *ngIf="!finish" class="row justify-content-center">
+<div>
+    <p>Tus resultados son los siguientes: </p>
+    <br>
+    
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [chartType]="barChartType">
+      </canvas>
+    
+  </div>
 </div>

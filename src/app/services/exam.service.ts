@@ -19,4 +19,13 @@ export class ExamService {
       option: 1
     });
   }
+  getSubCategories(idAspect){
+    return this.http.get<any>(url + 'subCategories/'+idAspect);
+  }
+  /*return this.http.post<any>(url +'subCategories',{
+    id_category:  1,
+    id_teacher: 1,
+    option: 1
+  });*/
+
 }

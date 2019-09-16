@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { QuestionComponent } from './components/exam/question/question.component';
 
 import { ExamService } from '../app/services/exam.service'
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ExamService } from '../app/services/exam.service'
     AppRoutingModule,
     KatexModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ChartsModule
   ],
   providers: [ExamService],
   bootstrap: [AppComponent]

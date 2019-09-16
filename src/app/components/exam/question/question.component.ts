@@ -10,6 +10,7 @@ import { ExamService } from '../../../services/exam.service'
 export class QuestionComponent implements OnInit {
   @Input() tests: any;
   @Input() user: any;
+  @Input() aspects: any;
   paragraph = ``;
   btnMessage = "Enviar y Continuar";
   currentQuestion = 1;
@@ -17,12 +18,19 @@ export class QuestionComponent implements OnInit {
   studenAnswers = [];
   answer = 0;
   btnDisabled = "";
+  finish = true;
+
+  barChartType = 'bar';
+  barChartLabels = [];
+  barChartData = [];
 
   constructor(private exaService: ExamService) { }
 
   ngOnInit() {
     this.totalQuestion = this.tests.length;
     this.paragraph = this.tests[this.currentQuestion - 1].problem.question;
+    this.barChartLabels = ['subcat 1', 'subcat 2', 'subcat 3']
+
   }
 
   changeQuestion() {
@@ -43,8 +51,15 @@ export class QuestionComponent implements OnInit {
       this.studenAnswers.push(studentAnswer);
       this.btnDisabled = "true";
 
+
       this.exaService.insertStudentAnswers(this.studenAnswers).subscribe(data => {
         console.log("Mostrar las pinches estadisticas");
+        this.barChartData = [
+          {data: [this.totalQuestion, this.currentQuestion,10],backgroundColor: 'blue',
+          borderColor:'green', label: 'Preguntas acertadas'}
+          
+        ];
+        this.finish = false;
       },error => {
         console.log(error);
       });
@@ -63,7 +78,17 @@ export class QuestionComponent implements OnInit {
       }
       this.paragraph = this.tests[this.currentQuestion - 1].problem.question;
       this.answer = 0;
+      this.finish=true;
     }
+  }
+
+  subCategorie(idAspect){
+    this.exaService.getSubCategories(idAspect).subscribe(data =>{
+      console.log(data);
+    },error =>{
+      console.log("malo");
+    });
+    
   }
 
 }
