@@ -23,6 +23,16 @@ export class QuestionComponent implements OnInit {
   barChartType = 'bar';
   barChartLabels = [];
   barChartData = [];
+  barChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      yAxes: [{stacked: true }]
+    }
+  };
+  barChartLegend = true;
+  answerGood = 0;
+  answerBad = 0;
 
   constructor(private exaService: ExamService) { }
 
@@ -36,17 +46,19 @@ export class QuestionComponent implements OnInit {
   changeQuestion() {
     let studentAnswer = {
       id_student: this.user.idStudent,
-        id_group: this.user.idGroup,
-        id_test: 0,
-        failed: true,
-        date: new Date().toISOString().split("T")[0]
+      id_group: this.user.idGroup,
+      id_test: 0,
+      failed: true,
+      date: new Date().toISOString().split("T")[0]
     }
     if (this.currentQuestion == this.totalQuestion) {
       studentAnswer.id_test = this.tests[this.currentQuestion - 1].test.id;
       if (this.answer == this.tests[this.currentQuestion - 1].problem.answer) {
-        studentAnswer.failed = false
+        studentAnswer.failed = false;
+        this.answerGood++;
       } else {
         studentAnswer.failed = true;
+        this.answerBad++;
       }
       this.studenAnswers.push(studentAnswer);
       this.btnDisabled = "true";
@@ -55,20 +67,23 @@ export class QuestionComponent implements OnInit {
       this.exaService.insertStudentAnswers(this.studenAnswers).subscribe(data => {
         console.log("Mostrar las pinches estadisticas");
         this.barChartData = [
-          {data: [this.totalQuestion, this.currentQuestion,10],backgroundColor: 'blue',
-          borderColor:'green', label: 'Preguntas acertadas'}
-          
+          { data: [this.answerGood, this.currentQuestion, 3],backgroundColor:'green', 
+          borderColor:'black', label: 'Preguntas acertadas' },
+          { data: [this.answerBad, this.currentQuestion, 2],backgroundColor:'red', 
+          borderColor:'black', label: 'Preguntas erradas' }
         ];
         this.finish = false;
-      },error => {
+      }, error => {
         console.log(error);
       });
     } else {
       studentAnswer.id_test = this.tests[this.currentQuestion - 1].test.id;
       if (this.answer == this.tests[this.currentQuestion - 1].problem.answer) {
-        studentAnswer.failed = false
+        studentAnswer.failed = false;
+        this.answerGood += 1;
       } else {
         studentAnswer.failed = true;
+        this.answerBad++;
       }
       this.studenAnswers.push(studentAnswer);
       this.currentQuestion += 1;
@@ -78,17 +93,17 @@ export class QuestionComponent implements OnInit {
       }
       this.paragraph = this.tests[this.currentQuestion - 1].problem.question;
       this.answer = 0;
-      this.finish=true;
+      this.finish = true;
     }
   }
 
-  subCategorie(idAspect){
-    this.exaService.getSubCategories(idAspect).subscribe(data =>{
+  subCategorie(idAspect) {
+    this.exaService.getSubCategories(idAspect).subscribe(data => {
       console.log(data);
-    },error =>{
+    }, error => {
       console.log("malo");
     });
-    
+
   }
 
 }
