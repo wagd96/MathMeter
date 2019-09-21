@@ -27,9 +27,6 @@
         </div>
     </div>
     <div class="row  justify-content-center">
-        <p><b>Tiempo restante: </b>{{minutes}}:{{seconds | number: '2.0'}}</p>
-    </div>
-    <div class="row  justify-content-center">
-        <app-question *ngIf="containsTest" [tests]=tests [user]=user></app-question>
+        <app-question *ngIf="containsTest" [tests]=tests [user]=user [exam]=exam></app-question>
     </div>
 </div>

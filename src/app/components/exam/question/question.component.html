@@ -1,15 +1,21 @@
 <div style="font-family: sans-serif;">
     <br>
+    <div class="row  justify-content-center">
+        <p><b>Tiempo restante: </b>{{minutes}}:{{seconds | number: '2.0'}}</p>
+    </div>
     <p>Pregunta {{currentQuestion}} de {{totalQuestion}}</p>
     <ng-katex-paragraph [paragraph]="paragraph"></ng-katex-paragraph>
 
-    <!--(ngSubmit)="onSubmit()--><form #answerForm="ngForm">
+    <!--(ngSubmit)="onSubmit()-->
+    <form #answerForm="ngForm">
         <div class="form-group">
             <label for="answer">Respuesta</label>
-            <input type="number" class="form-control" [(ngModel)]="answer" placeholder="Ingrese la respuesta" id="answer" name = "answer" required>
+            <input type="number" class="form-control" [(ngModel)]="answer" placeholder="Ingrese la respuesta"
+                id="answer" name="answer" required>
         </div>
 
-        <button type="button" class="btn btn-success" (click)="changeQuestion()" disabled="{{btnDisabled}}">{{btnMessage}}</button>
-      
+        <button type="button" class="btn btn-success" (click)="changeQuestion()"
+            disabled="{{btnDisabled}}">{{btnMessage}}</button>
+
     </form>
 </div>
