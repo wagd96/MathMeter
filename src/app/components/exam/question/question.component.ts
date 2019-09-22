@@ -17,6 +17,8 @@ export class QuestionComponent implements OnInit {
   currentQuestion = 1;
   totalQuestion: number;
   studentAnswers = [];
+  wrongs = [];
+  corrects = [];
   answer = 0;
   btnDisabled = "";
   minutes: number;
@@ -87,8 +89,8 @@ export class QuestionComponent implements OnInit {
       if (data.status == 200) {
         //Mostrar las estadisticas
         console.log("Datos guardados con éxito");
+        this.showStatistisc();
       } else {
-        console.log('No es el status code');
       }
     }, err => {
       console.log("Problemas en la conexión a la BD", err)
@@ -109,5 +111,45 @@ export class QuestionComponent implements OnInit {
       this.studentAnswers.push(studentAnswer);
     }
     this.saveStudentAnswers();
+  }
+
+  showStatistisc() {
+    let subcats = [];
+    this.corrects = [];
+    this.wrongs = [];
+
+    this.tests.forEach(test => {
+      const nameSubCat = test.test.aspect__sub_cat_id__name;
+
+      if(! subcats.includes(nameSubCat)) {
+        subcats.push(nameSubCat)
+      }
+    });
+
+    subcats.forEach(subcat => {
+      let testsIds = [];
+      let accert = 0;
+      let wrong = 0;
+
+      this.tests.forEach(test => {
+        const nameSubCat = test.test.aspect__sub_cat_id__name;
+        const id = test.test.id
+        if(subcat == nameSubCat) {
+          testsIds.push(id);
+        }
+      });
+
+      this.studentAnswers.forEach(answer => {
+        if(testsIds.includes(answer.id_test)) {
+          if(answer.failed) {
+            wrong += 1;
+          } else {
+            accert += 1;
+          }
+        }
+      });
+      this.wrongs.push(wrong);
+      this.corrects.push(accert);
+    });
   }
 }
