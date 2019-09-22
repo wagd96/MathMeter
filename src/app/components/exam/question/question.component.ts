@@ -48,6 +48,7 @@ export class QuestionComponent implements OnInit {
   seconds: number;
   timer = null;
   showS = false;
+  messages = [];
 
   constructor(private exaService: ExamService) { }
 
@@ -57,6 +58,7 @@ export class QuestionComponent implements OnInit {
     this.minutes = this.exam.duration;
     this.seconds = 0;
     this.timer = setInterval(() => this.tick(), 1000);
+    this.tests[this.currentQuestion - 1].test.aspect__description;
   }
 
   changeQuestion() {
@@ -73,6 +75,7 @@ export class QuestionComponent implements OnInit {
         studentAnswer.failed = false
       } else {
         studentAnswer.failed = true;
+        this.messages.push(this.tests[this.currentQuestion - 1].test.aspect__description);
       }
       this.studentAnswers.push(studentAnswer);
       this.btnDisabled = "true";
@@ -84,6 +87,7 @@ export class QuestionComponent implements OnInit {
         studentAnswer.failed = false
       } else {
         studentAnswer.failed = true;
+        this.messages.push(this.tests[this.currentQuestion - 1].test.aspect__description);
       }
       this.studentAnswers.push(studentAnswer);
       this.currentQuestion += 1;

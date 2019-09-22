@@ -27,5 +27,12 @@
           [legend]="barChartLegend"
           [chartType]="barChartType">
         </canvas>
+
+        <div *ngIf="messages.length > 0">
+            <h3>Recomendaciones</h3>
+            <ul>
+                <li *ngFor="let message of messages">{{message}}</li>
+            </ul>
+        </div>
     </div>
 </div>
