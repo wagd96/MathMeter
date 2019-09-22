@@ -17,4 +17,15 @@
         <button type="button" class="btn btn-success" (click)="changeQuestion()"
             disabled="{{btnDisabled}}">{{btnMessage}}</button>
     </form>
+    <br>
+    <div style="display: block; height: 500px; width: 500px;" *ngIf="showS">
+        <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+    </div>
 </div>

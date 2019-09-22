@@ -5,6 +5,7 @@ import { KatexModule } from 'ng-katex';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,7 @@ import { ExamService } from '../app/services/exam.service'
   imports: [
     BrowserModule,
     FormsModule,
+    ChartsModule,
     AppRoutingModule,
     KatexModule,
     HttpClientModule,

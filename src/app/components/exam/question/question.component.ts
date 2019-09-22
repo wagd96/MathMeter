@@ -12,6 +12,29 @@ export class QuestionComponent implements OnInit {
   @Input() user: any;
   @Input() exam: any;
 
+  //Datos para la estadistica
+  public barChartOptions = {
+    responsive: true,
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }, 
+    scales: {
+      yAxes: [{
+           ticks: {
+              min: 0,
+              stepSize: 1,
+          }
+      }]
+  }
+  };
+  public barChartLabels = [];
+  public barChartType = 'bar';
+  public barChartLegend = true;
+  public barChartData = [];
+
   paragraph = ``;
   btnMessage = "Enviar y Continuar";
   currentQuestion = 1;
@@ -24,6 +47,7 @@ export class QuestionComponent implements OnInit {
   minutes: number;
   seconds: number;
   timer = null;
+  showS = false;
 
   constructor(private exaService: ExamService) { }
 
@@ -72,6 +96,7 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+  //Funcion de ejecución en el timer
   tick() {
     if (--this.seconds < 0) {
       this.seconds = 59;
@@ -118,14 +143,15 @@ export class QuestionComponent implements OnInit {
     this.corrects = [];
     this.wrongs = [];
 
+    //Tomar los nombres de las subcategorias
     this.tests.forEach(test => {
       const nameSubCat = test.test.aspect__sub_cat_id__name;
-
       if(! subcats.includes(nameSubCat)) {
         subcats.push(nameSubCat)
       }
     });
 
+    //Para cada subcategoria tomar las buenas y las malas
     subcats.forEach(subcat => {
       let testsIds = [];
       let accert = 0;
@@ -151,5 +177,12 @@ export class QuestionComponent implements OnInit {
       this.wrongs.push(wrong);
       this.corrects.push(accert);
     });
+
+    this.barChartLabels = subcats;
+    this.barChartData = [
+      { data: this.wrongs, label: 'Incorrectas' },
+      { data: this.corrects, label: 'Correctas' },
+    ];
+    this.showS = true;
   }
 }
