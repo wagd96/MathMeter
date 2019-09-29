@@ -18,7 +18,8 @@
             disabled="{{btnDisabled}}">{{btnMessage}}</button>
     </form>
     <br>
-    <div style="display: block; height: 500px; width: 500px;" *ngIf="showS">
+    <div style="display: block; height: 400px; width: 400px;" *ngIf="showS">
+        <h3>Resultados</h3>
         <canvas baseChart
           [datasets]="barChartData"
           [labels]="barChartLabels"
@@ -27,7 +28,7 @@
           [legend]="barChartLegend"
           [chartType]="barChartType">
         </canvas>
-
+        <br>
         <div *ngIf="messages.length > 0">
             <h3>Recomendaciones</h3>
             <ul>
