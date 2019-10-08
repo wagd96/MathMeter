@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 
-const url = 'http://mathmeter.pythonanywhere.com/api/';
+const url = 'https://mathmeter.pythonanywhere.com/api/';
 export class ExamService {
   constructor(private http: HttpClient) { }
 

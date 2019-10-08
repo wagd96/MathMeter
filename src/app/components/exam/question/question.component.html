@@ -1,11 +1,10 @@
-<div style="font-family: sans-serif;">
-    <br>
+<div style="font-family: sans-serif;" *ngIf="!showS">
     <div class="row  justify-content-center">
         <p><b>Tiempo restante: </b>{{minutes}}:{{seconds | number: '2.0'}}</p>
     </div>
+    <br>
     <p>Pregunta {{currentQuestion}} de {{totalQuestion}}</p>
     <ng-katex-paragraph [paragraph]="paragraph"></ng-katex-paragraph>
-
     <!--(ngSubmit)="onSubmit()-->
     <form #answerForm="ngForm">
         <div class="form-group">
@@ -13,27 +12,26 @@
             <input type="number" class="form-control" [(ngModel)]="answer" placeholder="Ingrese la respuesta"
                 id="answer" name="answer" required>
         </div>
-
         <button type="button" class="btn btn-success" (click)="changeQuestion()"
             disabled="{{btnDisabled}}">{{btnMessage}}</button>
     </form>
+    <br>   
+</div>
+
+<div style="display: block; height: 400px; width: 400px;" *ngIf="showS">
+    <h3>Resultados</h3>
+    <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType">
+    </canvas>
     <br>
-    <div style="display: block; height: 400px; width: 400px;" *ngIf="showS">
-        <h3>Resultados</h3>
-        <canvas baseChart
-          [datasets]="barChartData"
-          [labels]="barChartLabels"
-          [options]="barChartOptions"
-          [plugins]="barChartPlugins"
-          [legend]="barChartLegend"
-          [chartType]="barChartType">
-        </canvas>
-        <br>
-        <div *ngIf="messages.length > 0">
-            <h3>Recomendaciones</h3>
-            <ul>
-                <li *ngFor="let message of messages">{{message}}</li>
-            </ul>
-        </div>
+    <div *ngIf="messages.length > 0">
+        <h3>Recomendaciones</h3>
+        <ul>
+            <li *ngFor="let message of messages">{{message}}</li>
+        </ul>
     </div>
 </div>

@@ -49,7 +49,7 @@ export class QuestionComponent implements OnInit {
   timer = null;
   showS = false;
   messages = [];
-
+  isFinish = true;
   constructor(private exaService: ExamService) { }
 
   ngOnInit() {
@@ -79,6 +79,7 @@ export class QuestionComponent implements OnInit {
       }
       this.studentAnswers.push(studentAnswer);
       this.btnDisabled = "true";
+      this.isFinish = false;
       this.saveStudentAnswers();
       clearInterval(this.timer);
 
@@ -97,6 +98,7 @@ export class QuestionComponent implements OnInit {
       }
       this.paragraph = this.tests[this.currentQuestion - 1].problem.question;
       this.answer = 0;
+      this.isFinish= true;
     }
   }
 
